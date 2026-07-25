@@ -6,6 +6,9 @@ import path from "node:path";
 import { clerkMiddleware } from '@clerk/express'
 import { clerkWebhookHandler } from "./webhooks/clerk";
 import { getEnv } from "./lib/env";
+import meRouter from "./routes/meRouter";
+import productRouter from "./routes/productRouter";
+import streamRouter from "./routes/streamRouter";
 
 const env = getEnv();
 const app = express();
@@ -24,6 +27,12 @@ app.use(clerkMiddleware())
 app.get(["/health", "/api/health"], (_req, res) => {
   res.json({ ok: true, status: "healthy", timestamp: new Date().toISOString() });
 });
+
+app.use("/api/me",meRouter);
+
+app.use("/api/products",productRouter)
+
+app.use("/api/stream",streamRouter);
 
 // Serve frontend static files in production
 const publicDir = path.join(process.cwd(), "public");
