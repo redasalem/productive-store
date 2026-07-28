@@ -9,6 +9,7 @@ import { getEnv } from "./lib/env";
 import meRouter from "./routes/meRouter";
 import productRouter from "./routes/productRouter";
 import streamRouter from "./routes/streamRouter";
+import checkoutRouter from "./routes/checkoutRouter";
 
 const env = getEnv();
 const app = express();
@@ -16,6 +17,10 @@ const app = express();
 app.post('/webhooks/clerk', express.raw({ type: 'application/json' }), (req, res) => {
   void clerkWebhookHandler(req, res);
 });
+
+// app.post('/webhooks/polar', express.raw({ type: 'application/json' }), (req, res) => {
+//   void polarWebhookHandler(req, res);
+// });
 
 app.use(express.json());
 
@@ -33,6 +38,9 @@ app.use("/api/me",meRouter);
 app.use("/api/products",productRouter)
 
 app.use("/api/stream",streamRouter);
+
+app.use("/api/checkout",checkoutRouter);
+
 
 // Serve frontend static files in production
 const publicDir = path.join(process.cwd(), "public");
