@@ -5,6 +5,7 @@ import { getCaregories, getProductBySlug, listProducts } from "../controlers/pro
 const router: Router = Router();
 
 router.get("/",listProducts);
+router.get("/categories",getCaregories);
 router.get("/caregories",getCaregories);
 router.get("/:slug",getProductBySlug);
 
